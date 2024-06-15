@@ -29,5 +29,6 @@ def create_user(car: schemas.CarCreate, db: Session = Depends(get_db)):
 def read_car(car_id: int, db: Session = Depends(get_db)):
     db_user = crud.get_car(db, car_id=car_id)
     if db_user is None:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail="Car not found")
     return db_user
+
