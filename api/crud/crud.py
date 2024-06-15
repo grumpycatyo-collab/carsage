@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
 from . import schemas
-from models import models
+from business.models import models
 
 
 def get_car(db: Session, car_id : int):

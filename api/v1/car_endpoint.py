@@ -3,7 +3,7 @@ import logging as log
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, HTTPException, Body, status, Depends, Query
 from ..crud import crud, schemas
-from models import models
+from business.models import models
 from foundation.database import SessionLocal, engine
 from typing import List
 
