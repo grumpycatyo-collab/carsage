@@ -14,7 +14,7 @@ def get_cars(db: Session, skip: int = 0, limit: int = 100): #not tested
     return db.query(models.Car).offset(skip).limit(limit).all()
 
 def create_car(db: Session, car: schemas.CarCreate):
-    db_car = models.User(**car.dict())
+    db_car = models.Car(**car.dict())
     db.add(db_car)
     db.commit()
     db.refresh(db_car)
