@@ -8,15 +8,13 @@ import os
 
 import uvicorn
 from fastapi import FastAPI
-
-# from api.v1 import lesson_plan_endpoint
-# from dependencies.auth import authenticate
-
+from api.v1 import car_endpoint
 app = FastAPI()
 
-app.include_router(
-    lesson_plan_endpoint.router,
-    prefix="/v1",
+
+app.include_router (
+    car_endpoint.router,
+    prefix="/api/v1",
     tags=["v1"]
 )
 
