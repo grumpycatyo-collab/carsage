@@ -23,3 +23,7 @@ class Car(Base):
     upholstery = Column(String)
     traction = Column(String)  # rwd, fwd, awd
     grade = Column(Integer)  # from 0 to 10
+    
+    class Config:
+        orm_mode = True
+        from_attributes = True

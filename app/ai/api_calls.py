@@ -25,7 +25,6 @@ data_string = '''
 ]
 '''
 
-
 data_json = json.loads(data_string)
 
 def generate_anthropic(prompt, cars_list):
@@ -36,7 +35,8 @@ def generate_anthropic(prompt, cars_list):
     You are a company secretary that only speaks in JSON. Do not generate output that isn’t in properly formatted JSON. The response shouldn't have a json tag or any other tag.
     Analyze this list of cars: {cars_list} and the users prompt :{prompt} and return the best {top} cars that will suit you and format the response in {data_json} format. 
   '''
-    
+    print(prompt)
+
     message = client.messages.create(
         model='claude-3-haiku-20240307',
         max_tokens=3000,

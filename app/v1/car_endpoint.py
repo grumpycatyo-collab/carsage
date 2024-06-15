@@ -28,14 +28,36 @@ def create_user(car: schemas.CarCreate, db: Session = Depends(get_db)):
 
 @router.get("/car/{car_id}", response_model=schemas.Car)
 def read_car(car_id: int, db: Session = Depends(get_db)):
-    db_user = crud.get_car(db, car_id=car_id)
-    if db_user is None:
-        raise HTTPException(status_code=404, detail="User not found")
-    return db_user
+    db_car = crud.get_car(db, car_id=car_id)
+    if db_car is None:
+        raise HTTPException(status_code=404, detail="Car not found")
+    return db_car
 
-@router.post("/car/ai/")
+@router.post("/car/ai")
 def get_car_by_prompt(prompt: str, db: Session = Depends(get_db)):
     db_cars = crud.get_cars(db)
-    cars_list = [schemas.Car.from_orm(car) for car in db_cars]
-    response = api_calls.generate_anthropic(prompt,cars_list)
+    cars_list = list(map(lambda car: schemas.Car(**car.__dict__), db_cars))
+    response = api_calls.generate_anthropic(prompt, cars_list)
     return response
+
+@router.get("/cars/", response_model=List[schemas.Car])
+def get_cars(
+    make: str = None,
+    bodytype: str = None,
+    state: str = None,
+    model: str = None,
+    fuel: str = None,
+    min_price: int = None,
+    max_price: int = None,
+    min_power: int = None,
+    max_power: int = None,
+    gearbox: str = None,
+    color: str = None,
+    upholstery: str = None,
+    traction: str = None,
+    min_grade: int = None,
+    max_grade: int = None,
+    db: Session = Depends(get_db)
+):
+    return crud.get_cars(db, make, bodytype, state, model, fuel,min_price, max_price, min_power, max_power, min_grade, max_grade,
+                         gearbox, color, upholstery, traction)
