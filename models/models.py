@@ -11,6 +11,8 @@ class Car(Base):
     __tablename__ = "cars"
     id = Column(Integer, primary_key=True)
     make = Column(String)
+    bodytype = Column(String)
+    state = Column(String)
     model = Column(String)
     fuel = Column(String)
     price = Column()

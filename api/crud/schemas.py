@@ -6,6 +6,8 @@ class CarBase(BaseModel):
     make: str
     model: str
     fuel: str
+    state: str
+    bodytype: str
     price: float
     power: int
     torque: int
