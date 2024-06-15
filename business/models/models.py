@@ -23,8 +23,3 @@ class Car(Base):
     upholstery = Column(String)
     traction = Column(String)  # rwd, fwd, awd
     grade = Column(Integer)  # from 0 to 10
-
-    def __repr__(self):
-        return (f"<Car(brand='{self.brand}', model='{self.model}', fuel='{self.fuel}', price={self.price}, "
-                f"power={self.power}, torque={self.newton_meters}, gearbox='{self.gearbox}', color='{self.color}', "
-                f"upholstery='{self.upholstery}', traction='{self.traction}', grade={self.grade})>")

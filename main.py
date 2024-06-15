@@ -8,7 +8,7 @@ import os
 
 import uvicorn
 from fastapi import FastAPI
-from api.v1 import car_endpoint
+from app.v1 import car_endpoint
 app = FastAPI()
 
 
