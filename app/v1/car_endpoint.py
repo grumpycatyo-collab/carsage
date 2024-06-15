@@ -6,6 +6,7 @@ from ..crud import crud, schemas
 from business.models import models
 from foundation.database import SessionLocal, engine
 from typing import List
+from ..ai import api_calls
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -31,3 +32,10 @@ def read_car(car_id: int, db: Session = Depends(get_db)):
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
+
+@router.post("/car/ai/")
+def get_car_by_prompt(prompt: str, db: Session = Depends(get_db)):
+    db_cars = crud.get_cars(db)
+    cars_list = [schemas.Car.from_orm(car) for car in db_cars]
+    response = api_calls.generate_anthropic(prompt,cars_list)
+    return response
