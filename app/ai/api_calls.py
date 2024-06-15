@@ -21,6 +21,9 @@ data_string = '''
     "traction": "string",
     "grade": 0,
     "id": 0,
+    "image_link": "string",
+    "purpose": "string",
+    "year": 0,
     "short_description": "string"
   }
 ]

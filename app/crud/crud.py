@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-
+from sqlalchemy import func
 from . import schemas
 from business.models import models
 
@@ -21,7 +21,7 @@ def get_cars(db: Session, make: str = None, bodytype: str = None, state: str = N
              model: str = None, fuel: str = None, min_price: int = None, max_price: int = None,
              min_power: int = None, max_power: int = None, gearbox: str = None,
              color: str = None, upholstery: str = None, traction: str = None,
-             min_grade: int = None, max_grade: int = None):
+             min_grade: int = None, max_grade: int = None, skip: int = 0, limit: int = 100):
     query = db.query(models.Car)
     if make is not None:
         query = query.filter(models.Car.make == make)
@@ -54,4 +54,22 @@ def get_cars(db: Session, make: str = None, bodytype: str = None, state: str = N
     if max_grade is not None:
         query = query.filter(models.Car.grade <= max_grade)
 
-    return query.all()
+    return query.offset(skip).limit(limit).all()
+
+
+def get_cars_summary(db: Session):
+    makes = db.query(models.Car.make).distinct().all()
+    colors = db.query(models.Car.color).distinct().all()
+    states = db.query(models.Car.state).distinct().all()
+    purposes = db.query(models.Car.purpose).distinct().all()
+    min_price = db.query(func.min(models.Car.price)).scalar()
+    max_price = db.query(func.max(models.Car.price)).scalar()
+    
+    return {
+        "makes": [make[0] for make in makes],
+        "colors": [color[0] for color in colors],
+        "states": [state[0] for state in states],
+        "purposes": [purpose[0] for purpose in purposes],
+        "min_price": min_price,
+        "max_price": max_price
+    }

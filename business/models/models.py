@@ -22,8 +22,11 @@ class Car(Base):
     color = Column(String)
     upholstery = Column(String)
     traction = Column(String)  # rwd, fwd, awd
-    grade = Column(Integer)  # from 0 to 10
-    
+    grade = Column(Integer)
+    purpose = Column(String)
+    year = Column(Integer)
+    image_link = Column(String)
+
     class Config:
         orm_mode = True
         from_attributes = True

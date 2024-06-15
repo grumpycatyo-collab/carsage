@@ -47,6 +47,8 @@ def get_car_by_prompt(prompt: str, db: Session = Depends(get_db)):
 
 @router.get("/cars/", response_model=List[schemas.Car])
 def get_cars(
+    skip: int = 0,
+    limit: int = 100,
     make: str = None,
     bodytype: str = None,
     state: str = None,
@@ -65,7 +67,7 @@ def get_cars(
     db: Session = Depends(get_db)
 ):
     return crud.get_cars(db, make, bodytype, state, model, fuel,min_price, max_price, min_power, max_power, min_grade, max_grade,
-                         gearbox, color, upholstery, traction)
+                         gearbox, color, upholstery, traction, skip, limit)
     
     
 @router.get("/cars/compare")
@@ -91,3 +93,7 @@ def get_cars_compare(car1: int, car2: int, db: Session = Depends(get_db)):
     return response
     
     
+    
+@router.get("/cars/summary")
+def read_cars_summary(db: Session = Depends(get_db)):
+    return crud.get_cars_summary(db)

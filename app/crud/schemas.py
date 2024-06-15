@@ -16,6 +16,10 @@ class CarBase(BaseModel):
     upholstery: str
     traction: str  # rwd, fwd, awd
     grade: int  # from 0 to 10
+    purpose : str 
+    year : int
+    image_link : str
+
 
 class CarCreate(CarBase):
     pass
