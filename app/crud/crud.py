@@ -20,41 +20,51 @@ def create_car(db: Session, car: schemas.CarCreate):
 def get_cars(db: Session, make: str = None, bodytype: str = None, state: str = None,
              model: str = None, fuel: str = None, min_price: int = None, max_price: int = None,
              min_power: int = None, max_power: int = None, gearbox: str = None,
-             color: str = None, upholstery: str = None, traction: str = None,
+             color: str = None, upholstery: str = None, traction: str = None, year: int = None, purpose: str = None,
              min_grade: int = None, max_grade: int = None, skip: int = 0, limit: int = 100):
+    
     query = db.query(models.Car)
-    if make is not None:
+    
+    if make:
         query = query.filter(models.Car.make == make)
-    if bodytype is not None:
+    if bodytype:
         query = query.filter(models.Car.bodytype == bodytype)
-    if state is not None:
+    if state:
         query = query.filter(models.Car.state == state)
-    if model is not None:
+    if model:
         query = query.filter(models.Car.model == model)
-    if fuel is not None:
+    if fuel:
         query = query.filter(models.Car.fuel == fuel)
-    if min_price is not None:
+    if min_price:
         query = query.filter(models.Car.price >= min_price)
-    if max_price is not None:
+    if max_price:
         query = query.filter(models.Car.price <= max_price)
-    if min_power is not None:
+    if min_power:
         query = query.filter(models.Car.power >= min_power)
-    if max_power is not None:
+    if max_power:
         query = query.filter(models.Car.power <= max_power)
-    if gearbox is not None:
+    if gearbox:
         query = query.filter(models.Car.gearbox == gearbox)
-    if color is not None:
+    if color:
         query = query.filter(models.Car.color == color)
-    if upholstery is not None:
+    if upholstery:
         query = query.filter(models.Car.upholstery == upholstery)
-    if traction is not None:
+    if traction:
         query = query.filter(models.Car.traction == traction)
-    if min_grade is not None:
+    if min_grade:
         query = query.filter(models.Car.grade >= min_grade)
-    if max_grade is not None:
+    if max_grade:
         query = query.filter(models.Car.grade <= max_grade)
+    if year:
+        query = query.filter(models.Car.year == year)
+    if purpose:
+        query = query.filter(models.Car.purpose == purpose)
 
-    return query.offset(skip).limit(limit).all()
+    query = query.offset(skip).limit(limit)
+    return query.all()
+
+
+
 
 
 def get_cars_summary(db: Session):

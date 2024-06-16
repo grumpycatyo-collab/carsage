@@ -45,10 +45,8 @@ def get_car_by_prompt(prompt: str, db: Session = Depends(get_db)):
     response = api_calls.generate_top_cars(prompt, cars_list)
     return response
 
-@router.get("/cars/", response_model=List[schemas.Car])
+@router.get("/cars", response_model=List[schemas.Car])
 def get_cars(
-    skip: int = 0,
-    limit: int = 100,
     make: str = None,
     bodytype: str = None,
     state: str = None,
@@ -61,13 +59,17 @@ def get_cars(
     gearbox: str = None,
     color: str = None,
     upholstery: str = None,
+    year: int = None,
+    purpose: str = None,
     traction: str = None,
     min_grade: int = None,
     max_grade: int = None,
+    skip: int = 0,
+    limit: int = 100,
     db: Session = Depends(get_db)
 ):
-    return crud.get_cars(db, make, bodytype, state, model, fuel,min_price, max_price, min_power, max_power, min_grade, max_grade,
-                         gearbox, color, upholstery, traction, skip, limit)
+    return crud.get_cars(db, make, bodytype, state, model, fuel, min_price, max_price,
+                         min_power, max_power, gearbox, color, upholstery, traction,  year, purpose, min_grade, max_grade, skip, limit)
     
     
 @router.get("/cars/compare")
@@ -91,7 +93,6 @@ def get_cars_compare(car1: int, car2: int, db: Session = Depends(get_db)):
     }
     
     return response
-    
     
     
 @router.get("/cars/summary")
